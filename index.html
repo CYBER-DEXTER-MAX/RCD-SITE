@@ -1,0 +1,406 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>RCD TEAM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <style>
+        .fancy {
+            background-color: transparent;
+            border: 2px solid #000;
+            border-radius: 0;
+            box-sizing: border-box;
+            color: #00FF00;
+            cursor: pointer;
+            display: inline-block;
+            float: right;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin: 0;
+            outline: none;
+            overflow: visible;
+            padding: 1.25em 2em;
+            position: relative;
+            text-align: center;
+            text-decoration: none;
+            text-transform: none;
+            transition: all 0.3s ease-in-out;
+            user-select: none;
+            font-size: 13px;
+        }
+
+        .fancy::before {
+            content: " ";
+            width: 1.5625rem;
+            height: 2px;
+            background: black;
+            top: 50%;
+            left: 1.5em;
+            position: absolute;
+            transform: translateY(-50%);
+            transform-origin: center;
+            transition: background 0.3s linear, width 0.3s linear;
+        }
+
+        .fancy .text {
+            font-size: 1.125em;
+            line-height: 1.33333em;
+            padding-left: 2em;
+            display: block;
+            text-align: left;
+            transition: all 0.3s ease-in-out;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #00FF00;
+        }
+
+        .fancy .top-key {
+            height: 2px;
+            width: 1.5625rem;
+            top: -2px;
+            left: 0.625rem;
+            position: absolute;
+            background: #e8e8e8;
+            transition: width 0.5s ease-out, left 0.3s ease-out;
+        }
+
+        .fancy .bottom-key-1 {
+            height: 2px;
+            width: 1.5625rem;
+            right: 1.875rem;
+            bottom: -2px;
+            position: absolute;
+            background: #e8e8e8;
+            transition: width 0.5s ease-out, right 0.3s ease-out;
+        }
+
+        .fancy .bottom-key-2 {
+            height: 2px;
+            width: 0.625rem;
+            right: 0.625rem;
+            bottom: -2px;
+            position: absolute;
+            background: #e8e8e8;
+            transition: width 0.5s ease-out, right 0.3s ease-out;
+        }
+
+        .fancy:hover {
+            color: white;
+            background: black;
+        }
+
+        .fancy:hover::before {
+            width: 0.9375rem;
+            background: white;
+        }
+
+        .fancy:hover .text {
+            color: white;
+            padding-left: 1.5em;
+        }
+
+        .fancy:hover .top-key {
+            left: -2px;
+            width: 0px;
+        }
+
+        .fancy:hover .bottom-key-1,
+        .fancy:hover .bottom-key-2 {
+            right: 0;
+            width: 0;
+        }
+
+        .btn-class-name {
+            --color: 0, 255, 0;
+            border-radius: 0.5em;
+            transition: 0.3s;
+            background-color: rgba(var(--color), 0.2);
+            color: rgb(var(--color));
+            fill: rgb(var(--color));
+            font-family: monospace;
+            font-weight: bolder;
+            font-size: x-large;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border: 2px solid rgb(var(--color));
+            box-shadow: 0 0 10px rgba(var(--color), 0.4);
+            outline: none;
+            display: flex;
+            align-items: center;
+            padding: 0.5em 1em;
+        }
+
+        .btn-class-name:hover {
+            box-shadow: 0 0 0 5px rgba(var(--color), 0.5);
+        }
+
+        .btn-class-name span {
+            transform: scale(0.8);
+            transition: 0.3s;
+        }
+
+        .btn-class-name:hover span {
+            transform: scale(1);
+        }
+
+        .btn-class-name svg {
+            font-size: 0;
+            transform: scale(0.5) translateX(0%) rotate(-180deg);
+            transition: 0.3s;
+        }
+
+        .btn-class-name:hover svg {
+            font-size: 20px;
+            transform: scale(1) translateX(20%) rotate(0deg);
+        }
+
+        .btn-class-name:active {
+            transition: 0s;
+            box-shadow: 0 0 0 5px rgb(var(--color));
+        }
+
+        .video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .transparent-section {
+            background: rgba(0, 0, 0, 0.5);
+            color: #00FF00;
+        }
+
+        .transparent-black-section {
+            background: rgba(0, 0, 0, 0.5);
+            color: #00FF00;
+        }
+
+        .transparent-black-header {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .svg-frame {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .svg-frame svg {
+            position: absolute;
+            transition: .5s;
+            z-index: calc(1 - (0.2 * var(--j)));
+            transform-origin: center;
+            width: 344px;
+            height: 344px;
+            fill: none;
+        }
+
+        .svg-frame:hover svg {
+            transform: rotate(-80deg) skew(30deg) translateX(calc(45px * var(--i))) translateY(calc(-35px * var(--i)));
+        }
+
+        .svg-frame svg #center {
+            transition: .5s;
+            transform-origin: center;
+        }
+
+        .svg-frame:hover svg #center {
+            transform: rotate(-30deg) translateX(45px) translateY(-3px);
+        }
+
+        #out2 {
+            animation: rotate16 7s ease-in-out infinite alternate;
+            transform-origin: center;
+        }
+
+        #out3 {
+            animation: rotate16 3s ease-in-out infinite alternate;
+            transform-origin: center;
+            stroke: #ff0;
+        }
+
+        #inner3,
+        #inner1 {
+            animation: rotate16 4s ease-in-out infinite alternate;
+            transform-origin: center;
+        }
+
+        #center1 {
+            fill: #ff0;
+            animation: rotate16 2s ease-in-out infinite alternate;
+            transform-origin: center;
+        }
+
+        @keyframes rotate16 {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body class="font-roboto bg-gray-100">
+    <video autoplay muted loop class="video-background">
+        <source src="https://media-hosting.imagekit.io//4eb64f6ca327484c/192779-893446888_large.mp4?Expires=1832063940&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=NoUxl-SMTb6mt6IoUN6~RLZYkq5X8EGABRuuhtMEQnjdfwUn2~833Fem3wPCKQUHEQnudrLLv3mNTICf32JC8o6f7oKn3ZO8KtQjrKbRGcjm3WrLjMGu9EBuhtEPi~nFx218SRp-uRmE-1nJ7PtBqr-MLdEq-N5AqoeV-uR5PbHPM0Inw6mZ6guvqFZnY1y4U6ueU4pInNftnsqmKjKsFAYwgDxua~OveYQdwGRrIfkxvAim4bhgxzoJ7ENxD0UtB9MwbO7nG0ZdPaybNYhraZzEMWmTe5DQ2iL6wHxJlWU7ve~fIJTCiYeiB0GuTuEiC552wJ8Gpum02HUGbQliUA__" type="video/mp4">
+    </video>
+    <div class="content">
+        <header class="transparent-black-header text-white p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold">RCD TEAM</h1>
+                <nav>
+                    <ul class="flex space-x-4">
+                        <li><a class="hover:underline" href="#projects">Projects</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <section class="container mx-auto my-8 p-4 rounded shadow transparent-section" id="projects">
+            <h2 class="text-3xl font-bold mb-4 text-center">Our Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-transparent p-4 rounded shadow">
+                    <img alt="Screenshot of Unlimited Text Generate, a web application for task management" class="w-full h-48 object-cover rounded mb-4" height="400" src="https://i.ibb.co/T1KqK8z/UNLIME.png" width="600"/>
+                    <h3 class="text-xl font-bold text-green-500">Unlimited Text Generate</h3>
+                    <p class="text-green-500">A web application for task management that helps teams stay organized and productive. Automatically generate unlimited text and send to WhatsApp numbers.</p>
+                    <div class="flex justify-center mt-4">
+                        <a class="fancy" href="https://cyber-dexter-max.github.io/UNLIMETD-TEXT-MASSAGE/" target="_blank">
+                            <span class="top-key"></span>
+                            <span class="text">Get Started</span>
+                            <span class="bottom-key-1"></span>
+                            <span class="bottom-key-2"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-transparent p-4 rounded shadow">
+                    <img alt="Screenshot of Image URL Site, a tool for generating image URLs" class="w-full h-48 object-cover rounded mb-4" height="400" src="https://i.ibb.co/Wzrmt4z/image-urlgenerator-step1-2x.png" width="600"/>
+                    <h3 class="text-xl font-bold text-green-500">Image URL Site</h3>
+                    <p class="text-green-500">Generate image URLs from your bot. A tool that allows users to create and manage image URLs easily.</p>
+                    <div class="flex justify-center mt-4">
+                        <a class="fancy" href="https://cyber-dexter-max.github.io/IMAGE-URL-SITE" target="_blank">
+                            <span class="top-key"></span>
+                            <span class="text">Get Started</span>
+                            <span class="bottom-key-1"></span>
+                            <span class="bottom-key-2"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-transparent p-4 rounded shadow">
+                    <img alt="Screenshot of VCF Extract, a tool to use contacts VCF number get and share" class="w-full h-48 object-cover rounded mb-4" height="400" src="https://i.ibb.co/MRJ9rZr/hqdefault.jpg" width="600"/>
+                    <h3 class="text-xl font-bold text-green-500">VCF Extract</h3>
+                    <p class="text-green-500">This site uses contacts VCF number get and share.</p>
+                    <div class="flex justify-center mt-4">
+                        <a class="fancy" href="https://cyber-dexter-max.github.io/VCF-EX/" target="_blank">
+                            <span class="top-key"></span>
+                            <span class="text">Get Started</span>
+                            <span class="bottom-key-1"></span>
+                            <span class="bottom-key-2"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-transparent p-4 rounded shadow">
+                    <img alt="Screenshot of Image Split, a tool for image cutting and cataloging" class="w-full h-48 object-cover rounded mb-4" height="400" src="https://i.ibb.co/dt1HdCZ/split-landscape-image-in-fotor.jpg" width="600"/>
+                    <h3 class="text-xl font-bold text-green-500">Image Split</h3>
+                    <p class="text-green-500">Use for image cutting and cataloging.</p>
+                    <div class="flex justify-center mt-4">
+                        <a class="fancy" href="#">
+                            <span class="top-key"></span>
+                            <span class="text">Get Started</span>
+                            <span class="bottom-key-1"></span>
+                            <span class="bottom-key-2"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-transparent p-4 rounded shadow">
+                    <img alt="Screenshot of Catlog Image DL, a tool for downloading catalog images" class="w-full h-48 object-cover rounded mb-4" height="400" src="https://i.ibb.co/f4ZhkJk/unnamed.png" width="600"/>
+                    <h3 class="text-xl font-bold text-green-500">Catlog Image DL</h3>
+                    <p class="text-green-500">Download catalog images.</p>
+                    <div class="flex justify-center mt-4">
+                        <a class="fancy" href="https://dexter-catlog-image.vercel.app/" target="_blank">
+                            <span class="top-key"></span>
+                            <span class="text">Get Started</span>
+                            <span class="bottom-key-1"></span>
+                            <span class="bottom-key-2"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="bg-transparent p-4 rounded shadow">
+                    <img alt="Screenshot of GitHub User Name Repo Search, a tool to search GitHub repositories" class="w-full h-48 object-cover rounded mb-4" height="400" src="https://i.ibb.co/XLDzMgj/card.png" width="600"/>
+                    <h3 class="text-xl font-bold text-green-500">GitHub User Name Repo Search</h3>
+                    <p class="text-green-500">Search GitHub repositories from GitHub.</p>
+                    <div class="flex justify-center mt-4">
+                        <a class="fancy" href="https://repo-search-one.vercel.app/" target="_blank">
+                            <span class="top-key"></span>
+                            <span class="text">Get Started</span>
+                            <span class="bottom-key-1"></span>
+                            <span class="bottom-key-2"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="transparent-black-header text-white p-4 mt-8">
+            <div class="container mx-auto text-center">
+                <p>© 2023 RCD TEAM. All rights reserved.</p>
+                <div class="flex justify-center mt-4">
+                    <button class="btn-class-name" onclick="openNewTab()">
+                        <span>Next</span>
+                        <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5 0-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script>
+        function openNewTab() {
+            const newWindow = window.open("", "_blank");
+            newWindow.document.write(`
+                <html lang="en">
+                <head>
+                    <meta charset="utf-8"/>
+                    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+                    <title>SVG Animation</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+                    <style>
+                        body {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                            background-color: #000;
+                            color: #fff;
+                            font-family: 'Roboto', sans-serif;
+                        }
+                        .svg-frame {
+                            position: relative;
+                            width: 300px;
+                            height: 300px;
+                            transform-style: preserve-3d;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        .svg-frame svg {
+                            position: absolute;
+                            transition: .5s;
+                            z-index: calc(1 - (0.2 * var(--j)));
+                            transform-origin: center;
+                            width: 344px;
+                            height
