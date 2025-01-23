@@ -170,8 +170,86 @@
           height: 100%;
           object-fit: cover;
            z-index: -1;
-     }
+      }
+         nav ul {
+    display: flex;
+    justify-content: center; 
+    background-color: rgba(0, 0, 0, 0.8); 
+    padding: 10px 0;
+    border-radius: 8px;
+    margin: 0;
+    list-style: none;
+}
 
+nav ul li {
+    margin: 0 15px; 
+}
+
+
+nav ul {
+    display: flex;
+    justify-content: center; 
+    background: linear-gradient(to right, black, green);
+    padding: 05px 0;
+    border-radius: 22px;
+    margin: 0;
+    list-style: none;
+    box-shadow: 0 6px 9px rgba(0, 0, 0, 0.3); 
+}
+
+nav ul li {
+    margin: 0 01px; 
+    position: relative; 
+}
+
+nav ul li a {
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+    color: #fff; 
+    text-decoration: none;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    position: relative;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+}
+
+nav ul li a:hover {
+    background: #fff; 
+    color: #00c6ff; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+nav ul li a i {
+    font-size: 22px; 
+    transition: transform 0.3s ease, color 0.3s ease; 
+}
+
+
+nav ul li a:hover i {
+    transform: translateY(-5px); 
+    color: #00ff6c; 
+}
+
+
+nav ul li::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #fff; 
+    transition: all 0.3s ease-in-out;
+    transform: translateX(-50%);
+}
+
+nav ul li:hover::after {
+    width: 100%; 
+}
         .content {
             position: relative;
             z-index: 1;
@@ -261,6 +339,19 @@
     <video autoplay muted loop class="video-background">
     <source src="https://media-hosting.imagekit.io//4eb64f6ca327484c/192779-893446888_large.mp4?Expires=1832063940&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=NoUxl-SMTb6mt6IoUN6~RLZYkq5X8EGABRuuhtMEQnjdfwUn2~833Fem3wPCKQUHEQnudrLLv3mNTICf32JC8o6f7oKn3ZO8KtQjrKbRGcjm3WrLjMGu9EBuhtEPi~nFx218SRp-uRmE-1nJ7PtBqr-MLdEq-N5AqoeV-uR5PbHPM0Inw6mZ6guvqFZnY1y4U6ueU4pInNftnsqmKjKsFAYwgDxua~OveYQdwGRrIfkxvAim4bhgxzoJ7ENxD0UtB9MwbO7nG0ZdPaybNYhraZzEMWmTe5DQ2iL6wHxJlWU7ve~fIJTCiYeiB0GuTuEiC552wJ8Gpum02HUGbQliUA__" type="video/mp4">
 </video>
+  <header class="transparent-black-header text-white p-4">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold">RCD TEAM</h1>
+        <nav>
+            <ul class="flex space-x-4">
+                <li><a class="hover:underline" href="app.html">APP STORY</a></li>
+                <li><a class="hover:underline" href="bot.html">BOT INFO</a></li>
+                <li><a class="hover:underline" href="contact.html">Contact</a></li>
+                <li><a class="hover:underline" href="key.html">BUY KEY</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
     <div class="content">
         <header class="transparent-black-header text-white p-4">
             <div class="container mx-auto flex justify-between items-center">
@@ -359,13 +450,6 @@
             <div class="container mx-auto text-center">
                 <p>© 2023 RCD TEAM. All rights reserved.</p>
                 <div class="flex justify-center mt-4">
-                    <button class="btn-class-name" onclick="window.location.href='app.html'">
-                                <span>Next</span>
-                    </button>
-                        <svg viewBox="0 0 320 512" height="1em" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5 0-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </footer>
