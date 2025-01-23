@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Splitter</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f0f2f5;
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      color: #1a73e8;
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      resize: vertical;
+      font-family: monospace;
+      transition: border-color 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #1a73e8;
+      box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+    }
+
+    .button {
+      background: #1a73e8;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s ease, background 0.3s ease;
+      margin: 1rem 0;
+    }
+
+    .button:hover {
+      background: #1557b0;
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    .output-section {
+      margin: 2rem 0;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .output-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .copy-success {
+      animation: pulse 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 6px;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.3s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>JSON Splitter</h1>
+    <textarea id="jsonInput" rows="10" placeholder="Paste your JSON data here..."></textarea>
+    <button class="button" onclick="splitJSON()">Split JSON</button>
+    
+    <div id="output1" class="output-section">
+      <h3>File 1</h3>
+      <textarea id="outputFile1" rows="10" readonly placeholder="File 1 output will appear here..."></textarea>
+      <button class="button" onclick="copyToClipboard('outputFile1')">Copy File 1</button>
+    </div>
+
+    <div id="output2" class="output-section">
+      <h3>File 2</h3>
+      <textarea id="outputFile2" rows="10" readonly placeholder="File 2 output will appear here..."></textarea>
+      <button class="button" onclick="copyToClipboard('outputFile2')">Copy File 2</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Copied to clipboard!</div>
+
+  <script>
+    function splitJSON() {
+      const jsonInput = document.getElementById('jsonInput').value;
+      if (!jsonInput) {
+        showToast('Please paste your JSON data.', 'error');
+        return;
+      }
+      try {
+        const jsonData = JSON.parse(jsonInput);
+        const file1 = {};
+        const file2 = {};
+        
+        jsonData.forEach((item, index) => {
+          const botKey = `SESSION_ID_BOT_${index + 1}`;
+          
+          let statusReadMsg = item.AUTO_STATUS_REPLY_MESSAGE || "";
+          statusReadMsg = statusReadMsg.replace(/\\n/g, " ") + " ᴅᴇxᴛᴇʀ ꜱᴇʀᴠᴇʀ ";
+          
+          file1[botKey] = {
+            autoStatusSeen: item.AUTO_STATUS_SEEN,
+            autoStatusReply: item.AUTO_STATUS_REPLY,
+            statusReadMsg: statusReadMsg,
+            BOT_NAME: `DexterBot${index + 1}`
+          };
+          file2[botKey] = item.SESSION_ID;
+        });
+
+        document.getElementById('outputFile1').value = JSON.stringify(file1, null, 2);
+        document.getElementById('outputFile2').value = JSON.stringify(file2, null, 2);
+
+        // Show output sections with animation
+        document.getElementById('output1').classList.add('visible');
+        setTimeout(() => {
+          document.getElementById('output2').classList.add('visible');
+        }, 200);
+
+        showToast('JSON split successfully!', 'success');
+      } catch (error) {
+        showToast('Invalid JSON data. Please check your input.', 'error');
+      }
+    }
+
+    function copyToClipboard(elementId) {
+      const textarea = document.getElementById(elementId);
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+      
+      const button = textarea.nextElementSibling;
+      button.classList.add('copy-success');
+      setTimeout(() => button.classList.remove('copy-success'), 500);
+      
+      showToast('Copied to clipboard!', 'success');
+    }
+
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.style.background = type === 'success' ? '#4CAF50' : '#f44336';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+</body>
+</html>
